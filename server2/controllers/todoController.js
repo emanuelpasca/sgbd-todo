@@ -21,7 +21,7 @@ exports.getAllTodos = async (req, res) => {
 
 exports.getTodoById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.body;
     const todo = await Todo.getById(id);
     res.json(todo);
   } catch (error) {
@@ -31,7 +31,7 @@ exports.getTodoById = async (req, res) => {
 
 exports.updateTodo = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.body;
     const { text } = req.body;
     const updatedTodo = await Todo.update(id, text);
     res.json(updatedTodo);
@@ -42,7 +42,7 @@ exports.updateTodo = async (req, res) => {
 
 exports.deleteTodo = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.body;
     await Todo.delete(id);
     res.sendStatus(204);
   } catch (error) {

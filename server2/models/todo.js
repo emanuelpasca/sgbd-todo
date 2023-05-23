@@ -33,7 +33,7 @@ class Todo {
 
     try {
       const result = await session.run(
-        "MATCH (todo:Todo) WHERE ID(todo) = $id RETURN todo",
+        "MATCH (todo:Todo) WHERE elementID(todo) = $id RETURN todo",
         { id }
       );
       const todo = result.records[0].get("todo");
@@ -48,7 +48,7 @@ class Todo {
 
     try {
       const result = await session.run(
-        "MATCH (todo:Todo) WHERE ID(todo) = $id SET todo.text = $text RETURN todo",
+        "MATCH (todo:Todo) WHERE elementID(todo) = $id SET todo.text = $text RETURN todo",
         { id, text }
       );
       const updatedTodo = result.records[0].get("todo");
@@ -62,9 +62,12 @@ class Todo {
     const session = neo4j.session();
 
     try {
-      await session.run("MATCH (todo:Todo) WHERE ID(todo) = $id DELETE todo", {
-        id,
-      });
+      await session.run(
+        "MATCH (todo:Todo) WHERE elementID(todo) = $id DELETE todo",
+        {
+          id,
+        }
+      );
     } finally {
       session.close();
     }
