@@ -8,11 +8,12 @@ function App() {
   const [text, setText] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
   const [todoID, setTodoID] = useState("");
-  const [selectedDatabase, setSelectedDatabase] = useState("mongodb");
+  const [selectedDatabase, setSelectedDatabse] = useState("");
 
   useEffect(() => {
     getTodos(setTodo);
-  }, [selectedDatabase]);
+    setSelectedDatabse(localStorage.getItem("selectedDatabase"));
+  }, []);
 
   const updateMode = (_id, text) => {
     setIsUpdating(true);
@@ -21,14 +22,15 @@ function App() {
   };
 
   const handleDatabaseChange = (event) => {
-    setSelectedDatabase(event.target.value);
+    localStorage.setItem("selectedDatabase", event.target.value);
+    window.location.reload();
   };
 
   return (
     <div className="App">
       <select
         className="database-select"
-        value={selectedDatabase}
+        value={localStorage.getItem("selectedDatabase")}
         onChange={handleDatabaseChange}
       >
         <option value="arangodb">ArangoDB</option>
@@ -59,10 +61,26 @@ function App() {
         <div className="list">
           {todo.map((item) => (
             <ToDo
-              key={item._id}
-              text={item.text}
-              updateMode={() => updateMode(item._id, item.text)}
-              deleteTodo={() => deleteTodo(item._id, setTodo)}
+              key={selectedDatabase === "mongodb" ? item._id : item.elementId}
+              text={
+                selectedDatabase === "mongodb"
+                  ? item.text
+                  : item.properties.text
+              }
+              updateMode={() =>
+                updateMode(
+                  selectedDatabase === "mongodb" ? item._id : item.elementId,
+                  selectedDatabase === "mongodb"
+                    ? item.text
+                    : item.properties.text
+                )
+              }
+              deleteTodo={() =>
+                deleteTodo(
+                  selectedDatabase === "mongodb" ? item._id : item.elementId,
+                  setTodo
+                )
+              }
             ></ToDo>
           ))}
         </div>

@@ -17,14 +17,14 @@ module.exports.saveTodo = async (req, res) => {
 };
 
 module.exports.updateTodo = async (req, res) => {
-  const { _id, text } = req.body;
+  const { id: _id, text } = req.body;
   TodoModel.findByIdAndUpdate(_id, { text })
     .then(() => res.send("Updated Succesfully"))
     .catch((err) => console.log(err));
 };
 
 module.exports.deleteTodo = async (req, res) => {
-  const { _id } = req.body;
+  const { id: _id } = req.body;
   TodoModel.findByIdAndDelete(_id)
     .then(() => res.send("Deleted Succesfully"))
     .catch((err) => console.log(err));

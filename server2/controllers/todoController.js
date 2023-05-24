@@ -4,7 +4,7 @@ exports.createTodo = async (req, res) => {
   try {
     const { text } = req.body;
     const createdTodo = await Todo.create(text);
-    res.json(createdTodo);
+    res.send(createdTodo);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -13,7 +13,7 @@ exports.createTodo = async (req, res) => {
 exports.getAllTodos = async (req, res) => {
   try {
     const todos = await Todo.getAll();
-    res.json(todos);
+    res.send(todos);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -23,7 +23,7 @@ exports.getTodoById = async (req, res) => {
   try {
     const { id } = req.body;
     const todo = await Todo.getById(id);
-    res.json(todo);
+    res.send(todo);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -34,7 +34,7 @@ exports.updateTodo = async (req, res) => {
     const { id } = req.body;
     const { text } = req.body;
     const updatedTodo = await Todo.update(id, text);
-    res.json(updatedTodo);
+    res.send(updatedTodo);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
