@@ -1,5 +1,7 @@
 const TodoModel = require("../models/TodoModel");
 
+// Functiile care se vor ocupa de operatiile CRUD
+
 module.exports.getTodo = async (req, res) => {
   const todo = await TodoModel.find();
   res.send(todo);

@@ -1,5 +1,7 @@
 const Todo = require("../models/todo");
 
+// Aici avem functiile care se vor ocupa de operatiile CRUD
+
 exports.createTodo = async (req, res) => {
   try {
     const { text } = req.body;

@@ -1,5 +1,6 @@
 const neo4j = require("../config/neo4j");
 
+// Modelul unde avem query-urile pentru crud
 class Todo {
   static async create(text) {
     const session = neo4j.session();

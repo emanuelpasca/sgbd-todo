@@ -10,9 +10,13 @@ function App() {
   const [todoID, setTodoID] = useState("");
   const [selectedDatabase, setSelectedDatabse] = useState("");
 
+  /*
+    La fiecare randare  a aplicatiei sunt luate
+    din baza de date si este setata baza de date selectata
+  */
   useEffect(() => {
     getTodos(setTodo);
-    setSelectedDatabse(localStorage.getItem("selectedDatabase"));
+    setSelectedDatabse(localStorage.getItem("selectedDatabase") || "mongodb");
   }, []);
 
   const updateMode = (_id, text) => {
@@ -21,6 +25,11 @@ function App() {
     setTodoID(_id);
   };
 
+  /*
+  Functia cu care la fiecare modificare a select-ului
+  se seteaza in localstorage selectedDatabase si se da 
+  refresh la pagina
+  */
   const handleDatabaseChange = (event) => {
     localStorage.setItem("selectedDatabase", event.target.value);
     window.location.reload();
@@ -49,7 +58,7 @@ function App() {
           <div
             className="add"
             onClick={
-              isUpdating
+              isUpdating // daca sunt in modul de update se va apela functia updateTodo altfel addtodo
                 ? () =>
                     updateTodo(todoID, text, setTodo, setText, setIsUpdating)
                 : () => addTodo(text, setText, setTodo)
