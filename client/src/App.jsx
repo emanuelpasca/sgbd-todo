@@ -8,10 +8,11 @@ function App() {
   const [text, setText] = useState("");
   const [isUpdating, setIsUpdating] = useState(false);
   const [todoID, setTodoID] = useState("");
+  const [selectedDatabase, setSelectedDatabase] = useState("mongodb");
 
   useEffect(() => {
     getTodos(setTodo);
-  }, []);
+  }, [selectedDatabase]);
 
   const updateMode = (_id, text) => {
     setIsUpdating(true);
@@ -19,9 +20,21 @@ function App() {
     setTodoID(_id);
   };
 
+  const handleDatabaseChange = (event) => {
+    setSelectedDatabase(event.target.value);
+  };
+
   return (
     <div className="App">
-              <h1 className="h1-container">ToDo App</h1>
+      <select
+        className="database-select"
+        value={selectedDatabase}
+        onChange={handleDatabaseChange}
+      >
+        <option value="arangodb">ArangoDB</option>
+        <option value="mongodb">MongoDB</option>
+      </select>
+      <h1 className="h1-container">ToDo App</h1>
       <div className="container">
         <div className="top">
           <input
